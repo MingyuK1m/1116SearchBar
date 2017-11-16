@@ -26,12 +26,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
        // self.searchBar = {
-            let ser = UISearchController(searchResultsController: nil)
-            ser.searchResultsUpdater = self
-            ser.dimsBackgroundDuringPresentation = false
-            ser.searchBar.sizeToFit()
-            tableV.tableHeaderView = ser.searchBar
-            
+            self.searchBar = UISearchController(searchResultsController: nil)
+            self.searchBar.searchResultsUpdater = self
+           self.searchBar.dimsBackgroundDuringPresentation = false
+            self.searchBar.searchBar.sizeToFit()
+            tableV.tableHeaderView = self.searchBar.searchBar
            // return ser
        // }()
         
