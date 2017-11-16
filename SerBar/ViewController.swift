@@ -15,7 +15,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var ary = ["a","b","e","c","r","aa","bb","ee","cc","rr","aaa","bbb","eee","ccc","rrr","rasdas","easda","badsd","asdsa","csadasd","jhlhk","lgkj","rty","qwe","sd"]
     
-    var fry : [String] = []
+    var fry = [String]()
     
     var searchBar : UISearchController!
  
@@ -25,15 +25,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.searchBar = {
+       // self.searchBar = {
             let ser = UISearchController(searchResultsController: nil)
             ser.searchResultsUpdater = self
             ser.dimsBackgroundDuringPresentation = false
             ser.searchBar.sizeToFit()
             tableV.tableHeaderView = ser.searchBar
             
-            return ser
-        }()
+           // return ser
+       // }()
         
         self.tableV.dataSource = self
         self.tableV.delegate = self
@@ -43,11 +43,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.searchBar.isActive {
-            return fry.count
-        } else {
-            return ary.count
-        }
+        return self.searchBar.isActive ? fry.count : ary.count
         
     }
 
@@ -78,10 +74,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.fry = ffry as! [String]
         
         self.tableV.reloadData()
-        
-        
-        
-        
+    
+    }
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return ["a","b","c"]
     }
 }
 
