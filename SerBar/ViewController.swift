@@ -13,8 +13,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //var searchB : UISearchDisplayController 이제 사용안함
     
     
-    var test = ["a","b","e","c","r","aa","bb","ee","cc","rr","aaa","bbb","eee","ccc","rrr","aaaa","bbbb","eeee","cccc","rrrr","jhlhk","lgkj","rty","qwe","sd"]
+    var ary = ["a","b","e","c","r","aa","bb","ee","cc","rr","aaa","bbb","eee","ccc","rrr","rasdas","easda","badsd","asdsa","csadasd","jhlhk","lgkj","rty","qwe","sd"]
     
+    var fry : [String] = []
     
     var searchBar : UISearchController!
  
@@ -42,20 +43,45 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return test.count
+        if self.searchBar.isActive {
+            return fry.count
+        } else {
+            return ary.count
+        }
+        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableV.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        cell.textLabel?.text = test[indexPath.row]
+//        if self.searchBar.isActive{
+//            cell.textLabel?.text = fry[indexPath.row]
+//        } else {
+//            cell.textLabel?.text = ary[indexPath.row]
+//        }
+        
+        cell.textLabel?.text = self.searchBar.isActive ? fry[indexPath.row] : ary[indexPath.row]
+
         
         return cell
     }
 
     func  updateSearchResults(for searchController: UISearchController) {
-        print(searchController.searchBar.text!)
+        //print(searchController.searchBar.text!)
+        
+        self.fry.removeAll(keepingCapacity: false)
+        
+        let prd = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
+        
+        let ffry = (ary as NSArray).filtered(using: prd)
+        self.fry = ffry as! [String]
+        
+        self.tableV.reloadData()
+        
+        
+        
+        
     }
 }
 
