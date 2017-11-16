@@ -8,18 +8,54 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating{
+    
+    //var searchB : UISearchDisplayController 이제 사용안함
+    
+    
+    var test = ["a","b","e","c","r","aa","bb","ee","cc","rr","aaa","bbb","eee","ccc","rrr","aaaa","bbbb","eeee","cccc","rrrr","jhlhk","lgkj","rty","qwe","sd"]
+    
+    
+    var searchBar : UISearchController!
+ 
+    @IBOutlet weak var tableV: UITableView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.searchBar = {
+            let ser = UISearchController(searchResultsController: nil)
+            ser.searchResultsUpdater = self
+            ser.dimsBackgroundDuringPresentation = false
+            ser.searchBar.sizeToFit()
+            tableV.tableHeaderView = ser.searchBar
+            
+            return ser
+        }()
+        
+        self.tableV.dataSource = self
+        self.tableV.delegate = self
+        
+        self.tableV.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return test.count
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableV.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        cell.textLabel?.text = test[indexPath.row]
+        
+        return cell
     }
 
-
+    func  updateSearchResults(for searchController: UISearchController) {
+        print(searchController.searchBar.text!)
+    }
 }
 
